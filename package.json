@@ -11,7 +11,7 @@
         "pakeplus",
         "pakeplus-android"
     ],
-    "author": "1024小神",
+    "author": "jimiao",
     "license": "ISC",
     "dependencies": {
         "commander": "^13.1.0",

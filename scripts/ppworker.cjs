@@ -285,39 +285,6 @@ const clearLaunch = async () => {
     }
 }
 
-// update pppwd.html
-const updatePPPwdHtml = (
-    startMethod,
-    startPwd,
-    pwdTitle,
-    pwdBtn,
-    pwdPlace,
-    pwdTip,
-    pwdError,
-    pwdStyle,
-    pwdTheme,
-    webUrl,
-    isHtml
-) => {
-    console.log('updatePPPwdHtml......')
-    const indexHtmlPath = path.join(__dirname, './www/pppwd.html')
-    const indexHtml = fs.readFileSync(indexHtmlPath, 'utf-8')
-    const targetUrl = isHtml ? './index.html' : webUrl
-    const newIndexHtml = indexHtml
-        .replaceAll('startMethod', startMethod)
-        .replaceAll('startPwd', startPwd || '123456')
-        .replaceAll('pwdTitle', pwdTitle || '请输入密码')
-        .replaceAll('pwdBtn', pwdBtn || '验证')
-        .replaceAll('pwdPlace', pwdPlace || '')
-        .replaceAll('pwdTip', pwdTip || '')
-        .replaceAll('pwdError', pwdError || '密码错误')
-        .replaceAll('pwdStyle', pwdStyle || 'flat')
-        .replaceAll('pwdTheme', pwdTheme || 'dark')
-        .replaceAll('https://pakeplus.com/', targetUrl)
-    fs.writeFileSync(indexHtmlPath, newIndexHtml)
-    console.log('updatePPPwdHtml success')
-}
-
 // copy html to android res dir
 const initWebEnv = async (
     isHtml,
@@ -331,8 +298,7 @@ const initWebEnv = async (
     callPhone,
     download,
     internet,
-    position,
-    startMethod
+    position
 ) => {
     const assetsPath = path.join(__dirname, '../app/src/main/assets')
     const appJsonPath = path.join(assetsPath, 'app.json')
@@ -389,10 +355,7 @@ const initWebEnv = async (
         appJsonObj.position = false
     }
     // set html
-    if (startMethod === 'password' || startMethod === 'oncePwd') {
-        appJsonObj.webUrl = 'file:///android_asset/pppwd.html'
-    } else if (isHtml) {
-        // update webUrl
+    if (isHtml) {
         appJsonObj.webUrl = 'file:///android_asset/index.html'
     } else {
         appJsonObj.webUrl = webUrl
@@ -408,24 +371,7 @@ const initWebEnv = async (
         fs.removeSync(vConsolePath)
         console.log(`📦 vConsole.js deleted from Android res dir`)
     }
-    if (startMethod === 'password' || startMethod === 'oncePwd') {
-        // scripts/www/*
-        const htmlPath = path.join(__dirname, './www/*')
-        // copy to app/src/main/assets
-        execSync(`cp -r ${htmlPath} ${assetsPath}`)
-        console.log(`📦 HTML copied to Android res dir: ${assetsPath}`)
-    } else if (isHtml) {
-        // scripts/www/*
-        const htmlPath = path.join(__dirname, './www/*')
-        // copy to app/src/main/assets
-        execSync(`cp -r ${htmlPath} ${assetsPath}`)
-        console.log(`📦 HTML copied to Android res dir: ${assetsPath}`)
-    } else {
-        // delete app/src/main/assets/pppwd.html
-        const indexHtmlPath = path.join(assetsPath, 'pppwd.html')
-        await fs.remove(indexHtmlPath)
-        console.log(`📦 pppwd.html deleted from Android assets`)
-    }
+    // 本地页面由 app/src/main/assets/index.html 直接维护，构建不再从 scripts/www 复制
     // set launch
     if (launchImage) {
         appJsonObj.launch = launchImage
@@ -497,15 +443,6 @@ const main = async () => {
         download,
         internet,
         position,
-        startMethod,
-        startPwd,
-        pwdTitle,
-        pwdBtn,
-        pwdPlace,
-        pwdTip,
-        pwdError,
-        pwdStyle,
-        pwdTheme,
     } = ppconfig.phone
 
     const {
@@ -536,21 +473,6 @@ const main = async () => {
     // Update web URL if provided
     await updateSafeArea(dest, safeArea)
 
-    // update pppwd.html
-    updatePPPwdHtml(
-        startMethod,
-        startPwd,
-        pwdTitle,
-        pwdBtn,
-        pwdPlace,
-        pwdTip,
-        pwdError,
-        pwdStyle,
-        pwdTheme,
-        webUrl,
-        isHtml
-    )
-
     // 删除根目录的res
     await fs.remove(outPath)
 
@@ -579,8 +501,7 @@ const main = async () => {
         callPhone,
         download,
         internet,
-        position,
-        startMethod
+        position
     )
 
     // update manifest.xml

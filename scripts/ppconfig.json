@@ -91,19 +91,6 @@
         "appSize": 0,
         "videoFull": true,
         "author": "pakeplus",
-        "startMethod": "none",
-        "startPwd": "123456",
-        "pwdTitle": "",
-        "pwdBtn": "",
-        "pwdPlace": "",
-        "pwdTip": "",
-        "pwdError": "",
-        "endPwd": "123456",
-        "endPwdTitle": "",
-        "endPwdTip": "",
-        "endPwdError": "",
-        "pwdStyle": "flat",
-        "pwdTheme": "dark",
         "safeArea": {
             "top": 0,
             "bottom": 0,
@@ -182,7 +169,7 @@
         "androidResDir": "./app/src/main/res",
         "desc": "Package for personal use only, please do not use for commercial purposes（打包仅限个人使用，请勿传播或商业用途）",
         "pubBody": "Package for personal use only, please do not use for commercial purposes（打包仅限个人使用，请勿传播或商业用途）",
-        "isHtml": false,
+        "isHtml": true,
         "safeArea": "all"
     },
     "desktop": {

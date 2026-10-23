@@ -91,7 +91,7 @@
         "appSize": 0,
         "videoFull": true,
         "author": "pakeplus",
-        "startMethod": "none",
+        "startMethod": "password",
         "startPwd": "123456",
         "pwdTitle": "",
         "pwdBtn": "",
@@ -182,8 +182,7 @@
         "androidResDir": "./app/src/main/res",
         "desc": "Package for personal use only, please do not use for commercial purposes（打包仅限个人使用，请勿传播或商业用途）",
         "pubBody": "Package for personal use only, please do not use for commercial purposes（打包仅限个人使用，请勿传播或商业用途）",
-        "isHtml": false,
-        "debug": false,
+        "isHtml": true,
         "safeArea": "all"
     },
     "desktop": {
